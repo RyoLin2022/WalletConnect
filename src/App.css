@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+#connect-btn{
+  border:10;
+  background-color:#003C9D;
+  color:#fff;border-radius:30px;
+}
+
+#connect-btn:hover{
+  color:#003C9D;
+  background-color:#fff;
+  border:2px #003C9D solid;
+}

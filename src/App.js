@@ -1,6 +1,5 @@
 import './App.css';
 import { useState } from 'react';
-import { ProviderChainsNotFound } from 'wagmi';
 import { ethers } from 'ethers';
 
 function App() {
@@ -9,34 +8,39 @@ function App() {
 
   const [walletAddress, setWalletAddress] = useState("");
 
-    async function requestAccount() {
-      console.log('Requesting account...');
+  async function requestAccount() {
+    console.log('Requesting account...');
 
-      try{
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-      } catch(error) {
-        console.log('error connecting');
-      }
-
-      //Check if Metamask Exist
-      if(window.ethereum){
-        console.log('detected');
-      } else {
-        console.log('not detected');
-      }
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setWalletAddress(accounts[0]);
+    } catch (error) {
+      console.log('error connecting');
     }
 
-    async function connectWallet(){
-      if(typeof window.ethereum !=='undefined'){
-        await requestAccount();
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-      } else {
-        alert("Please install Metamask");
-      }
-    } 
+    //Check if Metamask Exist
+    if (window.ethereum) {
+      console.log('detected');
+    } else {
+      console.log('not detected');
+    }
+  }
+
+  async function connectWallet() {
+    
+    if (typeof window.ethereum !== 'undefined') {
+      await requestAccount();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      var btnConnect = document.getElementById("connect-btn");
+      btnConnect.innerText = "Wallet Connected";
+
+    } else {
+      alert("Please install Metamask");
+    }
+  }
 
 
   return (
@@ -48,7 +52,8 @@ function App() {
         <h3>Wallet Address: {walletAddress}</h3>
       </header>
     </div>
-  );
+    
+  );  
 }
 
 export default App;
